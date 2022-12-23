@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 type Props = {
   isLogged: boolean;
@@ -10,7 +11,9 @@ const Login = (props: Props) => {
   const [pw, setPw] = useState("");
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (pw == "1" && id == "1") props.setIsLogged(true);
+    if (pw == "1" && id == "1") {
+      props.setIsLogged(true);
+    }
     setId("");
     setPw("");
   };
@@ -42,7 +45,7 @@ const Login = (props: Props) => {
           </form>
         </>
       ) : (
-        ""
+        <Navigate to="/store" />
       )}
     </div>
   );

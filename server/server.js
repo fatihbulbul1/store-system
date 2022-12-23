@@ -9,7 +9,6 @@ const Product = require("./models/Product");
 mongoose.set("strictQuery", false);
 app.use(cors());
 app.use(express.json());
-
 app.post("/add", (req, res) => {
   const newProduct = new Product({
     img: req.body.img,

@@ -9,8 +9,12 @@ const Navbar = (props: Props) => {
     <div className="navbar">
       <div className="nav-container">
         <Link to="/store">Store</Link>
-        <Link to="/login">Login</Link>
-        {props.isLogged ? <Link to="/panel">Admin panel</Link> : ""}
+
+        {props.isLogged ? (
+          <Link to="/panel">Admin panel</Link>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
       </div>
     </div>
   );
