@@ -11,11 +11,14 @@ type Page = {
   img: string;
   productName: string;
   price: number;
+  description: string;
   review: number;
 };
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState<undefined | boolean>(undefined);
   const [pages, setPages] = useState([]);
+  const [userType, setUserType] = useState<string | undefined>(undefined);
+  const [id, setId] = useState("");
   useEffect(() => {
     fetch("http://localhost:3001/items")
       .then((res) => res.json())
@@ -23,13 +26,16 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <Navbar isLogged={isLogged} />
+      <Navbar userType={userType} isLogged={isLogged} />
       <Routes>
         {pages.map((page: Page) => {
           return (
             <Route
               path={`/item/${page._id}`}
-              element={<ItemDetails item={page} isLogged={isLogged} />}
+              key={page._id}
+              element={
+                <ItemDetails username={id} item={page} userType={userType} />
+              }
             />
           );
         })}
@@ -37,7 +43,15 @@ function App() {
         {/* <Route path="item/:id" element={<ItemDetails isLogged={isLogged} />} /> */}
         <Route
           path="/login"
-          element={<Login isLogged={isLogged} setIsLogged={setIsLogged} />}
+          element={
+            <Login
+              id={id}
+              setId={setId}
+              setUserType={setUserType}
+              isLogged={isLogged}
+              setIsLogged={setIsLogged}
+            />
+          }
         />
         <Route path="/store" element={<Store isLogged={isLogged} />} />
         <Route path="/panel" element={<Panel isLogged={isLogged} />} />

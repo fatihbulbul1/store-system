@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 type Props = {
-  isLogged: boolean;
+  isLogged: boolean | undefined;
 };
 
 type Item = {
@@ -9,6 +9,7 @@ type Item = {
   img: string;
   productName: string;
   price: number;
+  description: string;
   review: number;
 };
 
@@ -30,7 +31,7 @@ const Store = (props: Props) => {
       <div className="items">
         {items.map((item: Item) => {
           return (
-            <div className="item">
+            <div className="item" key={item._id}>
               <div className="item-wrapper">
                 <div className="item-img">
                   <img src={item.img} alt="" />

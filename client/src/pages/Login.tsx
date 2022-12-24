@@ -2,20 +2,37 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 type Props = {
-  isLogged: boolean;
-  setIsLogged: Dispatch<SetStateAction<boolean>>;
+  id: string;
+  setId: Dispatch<SetStateAction<string>>;
+  isLogged: boolean | undefined;
+  setIsLogged: Dispatch<SetStateAction<boolean | undefined>>;
+  setUserType: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const Login = (props: Props) => {
-  const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (pw == "1" && id == "1") {
-      props.setIsLogged(true);
-    }
-    setId("");
-    setPw("");
+    if (pw === "" || props.id === "") return;
+    fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: props.id,
+        password: pw,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.setIsLogged(data);
+        if (data === true) {
+          if (props.id === "1") props.setUserType("admin");
+          else props.setUserType("user");
+        }
+      })
+      .then(() => setPw(""));
   };
   return (
     <div className="container">
@@ -26,8 +43,8 @@ const Login = (props: Props) => {
             <label htmlFor="id">Username:</label>
             <input
               autoComplete="off"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
+              value={props.id}
+              onChange={(e) => props.setId(e.target.value)}
               id="id"
               type="text"
               name=""

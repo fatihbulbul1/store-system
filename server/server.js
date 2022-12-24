@@ -6,9 +6,41 @@ const cors = require("cors");
 const PORT = 3001;
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
+const StoreUser = require("./models/StoreUser");
 mongoose.set("strictQuery", false);
 app.use(cors());
 app.use(express.json());
+app.post("/login", (req, res) => {
+  StoreUser.findOne({ username: req.body.username }).then((user) => {
+    if (user.password === req.body.password) res.json(true);
+    else res.json(false);
+  });
+});
+app.post("/get-bookmark", (req, res) => {
+  StoreUser.findOne({ username: req.body.username }).then((user) => {
+    if (user.bookmarks.includes(req.body.bookmark)) res.json(true);
+    else res.json(false);
+  });
+});
+app.post("/add-bookmark", async (req, res) => {
+  let bookmarks = [];
+  await StoreUser.findOne({ username: req.body.username }).then((user) => {
+    bookmarks = user.bookmarks;
+    if (bookmarks.includes(req.body.bookmark)) {
+      let index = bookmarks.indexOf(req.body.bookmark);
+      bookmarks.splice(index, 1);
+    } else {
+      bookmarks.push(req.body.bookmark);
+    }
+  });
+  StoreUser.findOneAndUpdate(
+    { username: req.body.username },
+    { bookmarks: bookmarks }
+  ).then(() => res.json({ username: req.body.username, bookmarks: bookmarks }));
+});
+app.get("/users", (req, res) => {
+  StoreUser.find().then((users) => res.json(users));
+});
 app.post("/add", (req, res) => {
   const newProduct = new Product({
     img: req.body.img,

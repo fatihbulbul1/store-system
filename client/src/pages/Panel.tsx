@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 type Props = {
-  isLogged: boolean;
+  isLogged: boolean | undefined;
 };
 
 const Panel = (props: Props) => {
