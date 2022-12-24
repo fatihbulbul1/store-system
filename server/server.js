@@ -7,6 +7,7 @@ const PORT = 3001;
 const mongoose = require("mongoose");
 const Product = require("./models/Product");
 const StoreUser = require("./models/StoreUser");
+
 mongoose.set("strictQuery", false);
 app.use(cors());
 app.use(express.json());
@@ -20,6 +21,25 @@ app.post("/get-bookmark", (req, res) => {
   StoreUser.findOne({ username: req.body.username }).then((user) => {
     if (user.bookmarks.includes(req.body.bookmark)) res.json(true);
     else res.json(false);
+  });
+});
+app.post("/fetch-bookmark", async (req, res) => {
+  let bookmarks = [];
+  let queryArray = [];
+  await StoreUser.findOne({ username: req.body.username }).then((user) => {
+    bookmarks = user.bookmarks;
+  });
+  if (bookmarks.length === 0) {
+    res.json([]);
+    return;
+  }
+  bookmarks.forEach((b) => {
+    let query = { _id: b };
+    queryArray.push(query);
+  });
+  let queryString = { $or: queryArray };
+  Product.find(queryString).then((products) => {
+    res.json(products);
   });
 });
 app.post("/add-bookmark", async (req, res) => {

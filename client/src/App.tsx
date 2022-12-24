@@ -6,6 +6,7 @@ import Panel from "./pages/Panel";
 import Root from "./pages/Root";
 import Store from "./pages/Store";
 import ItemDetails from "./pages/ItemDetails";
+import Bookmarks from "./pages/Bookmarks";
 type Page = {
   _id: string;
   img: string;
@@ -55,6 +56,10 @@ function App() {
         />
         <Route path="/store" element={<Store isLogged={isLogged} />} />
         <Route path="/panel" element={<Panel isLogged={isLogged} />} />
+        <Route
+          path="/bookmarks"
+          element={<Bookmarks isLogged={isLogged} id={id} />}
+        />
         <Route path="*" element={<p>Not found!</p>} />
       </Routes>
     </div>
