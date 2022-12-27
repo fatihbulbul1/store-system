@@ -23,6 +23,11 @@ app.post("/get-bookmark", (req, res) => {
     else res.json(false);
   });
 });
+app.post("/get-cart", (req, res) => {
+  StoreUser.find({ username: req.body.username }).then((user) => {
+    res.json(user.cart);
+  });
+});
 app.post("/fetch-bookmark", async (req, res) => {
   let bookmarks = [];
   let queryArray = [];

@@ -43,6 +43,9 @@ const ItemDetails = (props: Props) => {
       })
       .then(() => console.log("done"));
   }, []);
+  const handleBuy = () => {
+    fetch("http://localhost:3001/get-cart");
+  };
   const handleBookmark = async (itemId: string) => {
     if (bookmark === reg) {
       setBookmark(solid);
@@ -73,7 +76,9 @@ const ItemDetails = (props: Props) => {
           </div>
           <div className="buy-section">
             <h1 className="detailed-price">{props.item.price}$</h1>
-            <button className="deliver buy-btn">BUY NOW!</button>
+            <button onClick={handleBuy} className="deliver buy-btn">
+              BUY NOW!
+            </button>
             {props.userType === "user" ? (
               <FontAwesomeIcon
                 onClick={() => handleBookmark(props.item._id)}

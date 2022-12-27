@@ -16,7 +16,12 @@ const Navbar = (props: Props) => {
         ) : props.userType === undefined ? (
           <Link to="/login">Login</Link>
         ) : (
-          <Link to="/bookmarks">Bookmarks</Link>
+          <>
+            <div style={{ display: "flex", gap: "20px" }} className="end">
+              <Link to="/bookmarks">Bookmarks</Link>
+              <Link to="/cart">Cart</Link>
+            </div>
+          </>
         )}
       </div>
     </div>

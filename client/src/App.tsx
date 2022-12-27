@@ -7,6 +7,7 @@ import Root from "./pages/Root";
 import Store from "./pages/Store";
 import ItemDetails from "./pages/ItemDetails";
 import Bookmarks from "./pages/Bookmarks";
+import Cart from "./pages/Cart";
 type Page = {
   _id: string;
   img: string;
@@ -60,6 +61,7 @@ function App() {
           path="/bookmarks"
           element={<Bookmarks isLogged={isLogged} id={id} />}
         />
+        <Route path="/cart" element={<Cart isLogged={isLogged} id={id} />} />
         <Route path="*" element={<p>Not found!</p>} />
       </Routes>
     </div>
