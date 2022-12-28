@@ -5,6 +5,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-regular-svg-icons";
 import { faBookmark as solid } from "@fortawesome/free-solid-svg-icons";
+import { Navigate, useNavigate } from "react-router-dom";
 type Props = {
   username: string;
   userType: string | undefined;
@@ -19,32 +20,46 @@ type Page = {
   review: number;
 };
 const ItemDetails = (props: Props) => {
+  const [inCart, setInCart] = useState(false);
+  const navigate = useNavigate();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [bookmark, setBookmark] = useState<IconDefinition | undefined>(
     undefined
   );
   useEffect(() => {
     if (props.username == "") return;
-    fetch("http://localhost:3001/get-bookmark", {
+    fetch("http://localhost:3001/get-user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: props.username,
-        bookmark: props.item._id,
+        id: props.item._id,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data) setBookmark(solid);
+        if (data.bookmarks) setBookmark(solid);
         else setBookmark(reg);
-        setIsBookmarked(data);
-      })
-      .then(() => console.log("done"));
+        setIsBookmarked(data.bookmarks);
+        setInCart(data.item);
+        console.log(inCart, isBookmarked);
+      });
   }, []);
   const handleBuy = () => {
-    fetch("http://localhost:3001/get-cart");
+    if (props.userType === undefined) {
+      navigate("/login");
+      return;
+    }
+    fetch("http://localhost:3001/add-cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: props.username, item: props.item._id }),
+    }).then(() => {
+      setInCart(true);
+      alert(`${props.item.productName} added to your cart!`);
+    });
   };
   const handleBookmark = async (itemId: string) => {
     if (bookmark === reg) {
@@ -76,9 +91,13 @@ const ItemDetails = (props: Props) => {
           </div>
           <div className="buy-section">
             <h1 className="detailed-price">{props.item.price}$</h1>
-            <button onClick={handleBuy} className="deliver buy-btn">
-              BUY NOW!
-            </button>
+            {!inCart || props.userType !== "user" ? (
+              <button onClick={handleBuy} className="deliver buy-btn">
+                BUY NOW!
+              </button>
+            ) : (
+              <button disabled={true}>Already in cart</button>
+            )}
             {props.userType === "user" ? (
               <FontAwesomeIcon
                 onClick={() => handleBookmark(props.item._id)}
@@ -88,7 +107,7 @@ const ItemDetails = (props: Props) => {
               ""
             )}
           </div>
-          {/* TODO: ADD BOOKMARKS
+          {/*
           TODO: ARAMA ÇUBUĞU EKLE */}
         </div>
       </div>

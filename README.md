@@ -1,4 +1,11 @@
-# Changelog
+![](./screenshot.png)
+
+# Changelog 1.1
+
+- Cart is running
+- Added cart items cannot buyable
+
+# Changelog 1.0
 
 - Login works
 - Bookmarks works
@@ -9,3 +16,8 @@
 
 - Fetch user and products once with custom hook. Fetching multiple times makes program run slow.
 - Export "type"s globally and reuse them.
+
+# TODO:
+
+- Search in store
+- Visualize cart

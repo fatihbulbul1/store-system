@@ -17,16 +17,33 @@ app.post("/login", (req, res) => {
     else res.json(false);
   });
 });
-app.post("/get-bookmark", (req, res) => {
+app.post("/get-user", (req, res) => {
   StoreUser.findOne({ username: req.body.username }).then((user) => {
-    if (user.bookmarks.includes(req.body.bookmark)) res.json(true);
-    else res.json(false);
+    let bBool;
+    let cBool;
+    if (user.bookmarks.includes(req.body.id)) bBool = true;
+    else bBool = false;
+    if (user.cart.includes(req.body.id)) cBool = true;
+    else cBool = false;
+    res.json({ bookmarks: bBool, item: cBool });
   });
 });
-app.post("/get-cart", (req, res) => {
-  StoreUser.find({ username: req.body.username }).then((user) => {
-    res.json(user.cart);
+app.post("/get-cart", async (req, res) => {
+  const user = await StoreUser.findOne({ username: req.body.username });
+  const cart = user.cart;
+  let queryArray = [];
+  cart.forEach((item) => {
+    queryArray.push({ _id: item });
   });
+  let queryString = { $or: queryArray };
+  Product.find(queryString).then((products) => res.json(products));
+});
+
+app.post("/add-cart", async (req, res) => {
+  await StoreUser.updateOne(
+    { username: req.body.username },
+    { $push: { cart: req.body.item } }
+  ).then((user) => res.json(user));
 });
 app.post("/fetch-bookmark", async (req, res) => {
   let bookmarks = [];
