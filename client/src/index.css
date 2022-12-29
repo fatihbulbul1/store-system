@@ -162,3 +162,67 @@ svg {
 .text-center {
   text-align: center;
 }
+.cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cart-item {
+  padding: 5px;
+}
+.cart-item-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.cart-img,
+.cart-img img {
+  width: 200px;
+  height: 200px;
+}
+.cart-info {
+  position: relative;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.cart-price {
+  display: flex;
+  align-items: center;
+}
+.cart-description {
+  max-width: 400px;
+  overflow: hidden;
+}
+.quantity {
+  display: flex;
+  margin-left: 10px;
+  gap: 5px;
+}
+.quantity button {
+  width: 25px;
+}
+.header-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fa-trash {
+  width: 20px !important;
+}
+.fa-trash:hover {
+  color: #424242;
+}
+.money-div {
+  width: 620px;
+  max-width: calc(100% - 15px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.cash {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

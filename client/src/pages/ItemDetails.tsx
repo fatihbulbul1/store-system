@@ -44,7 +44,6 @@ const ItemDetails = (props: Props) => {
         else setBookmark(reg);
         setIsBookmarked(data.bookmarks);
         setInCart(data.item);
-        console.log(inCart, isBookmarked);
       });
   }, []);
   const handleBuy = () => {
@@ -96,7 +95,7 @@ const ItemDetails = (props: Props) => {
                 BUY NOW!
               </button>
             ) : (
-              <button disabled={true}>Already in cart</button>
+              <button onClick={() => navigate("/cart")}>Already in cart</button>
             )}
             {props.userType === "user" ? (
               <FontAwesomeIcon

@@ -31,6 +31,10 @@ app.post("/get-user", (req, res) => {
 app.post("/get-cart", async (req, res) => {
   const user = await StoreUser.findOne({ username: req.body.username });
   const cart = user.cart;
+  if (cart.length === 0) {
+    res.json([]);
+    return;
+  }
   let queryArray = [];
   cart.forEach((item) => {
     queryArray.push({ _id: item });
@@ -44,6 +48,24 @@ app.post("/add-cart", async (req, res) => {
     { username: req.body.username },
     { $push: { cart: req.body.item } }
   ).then((user) => res.json(user));
+});
+app.post("/buy-cart", (req, res) => {
+  StoreUser.findOneAndUpdate(
+    { username: req.body.username },
+    { cart: [] }
+  ).then(() => res.json(true));
+});
+app.post("/remove-cart", (req, res) => {
+  StoreUser.updateOne(
+    {
+      username: req.body.username,
+    },
+    {
+      $pull: { cart: req.body.item },
+    }
+  ).then((user) => {
+    res.json(user);
+  });
 });
 app.post("/fetch-bookmark", async (req, res) => {
   let bookmarks = [];

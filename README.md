@@ -1,8 +1,13 @@
 ![](./screenshot.png)
 
+# Changelog 1.2
+
+- Cart is fully working
+- Now you can checkout and buy in cart with multiple quantities.
+
 # Changelog 1.1
 
-- Cart is running
+- Cart is running in its simplest form
 - Added cart items cannot buyable
 
 # Changelog 1.0
@@ -19,5 +24,6 @@
 
 # TODO:
 
-- Search in store
-- Visualize cart
+- Search in store `pending`
+- Visualize cart `COMPLETED`
+- Design admin panel to add new product or edit existing products `NEW`
