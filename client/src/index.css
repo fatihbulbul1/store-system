@@ -13,6 +13,9 @@ a:visited {
 a:active {
   color: #222;
 }
+.bold {
+  font-weight: bold;
+}
 .navbar {
   background-color: cadetblue;
   display: flex;
@@ -225,4 +228,27 @@ svg {
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+.edit-page,
+.add-new {
+  display: flex;
+  padding: 20px;
+}
+.edit-container {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+.edit-description {
+  max-width: 400px;
+}
+.add-new .edit-container {
+  width: 100%;
+}
+.admin-panel {
+  padding: 20px;
+  text-align: center;
 }

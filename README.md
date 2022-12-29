@@ -1,5 +1,12 @@
 ![](./screenshot.png)
 
+# Changelog 2.0
+
+- Search filter added.
+- Admin panel is fully working.
+- You can now add items.
+- You can edit items.
+
 # Changelog 1.2
 
 - Cart is fully working
@@ -21,9 +28,3 @@
 
 - Fetch user and products once with custom hook. Fetching multiple times makes program run slow.
 - Export "type"s globally and reuse them.
-
-# TODO:
-
-- Search in store `pending`
-- Visualize cart `COMPLETED`
-- Design admin panel to add new product or edit existing products `NEW`

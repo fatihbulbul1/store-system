@@ -8,6 +8,8 @@ import Store from "./pages/Store";
 import ItemDetails from "./pages/ItemDetails";
 import Bookmarks from "./pages/Bookmarks";
 import Cart from "./pages/Cart";
+import Edit from "./pages/Edit";
+import AddNew from "./pages/AddNew";
 type Page = {
   _id: string;
   img: string;
@@ -21,24 +23,31 @@ function App() {
   const [pages, setPages] = useState([]);
   const [userType, setUserType] = useState<string | undefined>(undefined);
   const [id, setId] = useState("");
+  const [isChanged, setIsChanged] = useState(true);
   useEffect(() => {
     fetch("http://localhost:3001/items")
       .then((res) => res.json())
       .then((data) => setPages(data));
-  }, []);
+  }, [isChanged]);
   return (
     <div className="App">
       <Navbar userType={userType} isLogged={isLogged} />
       <Routes>
         {pages.map((page: Page) => {
           return (
-            <Route
-              path={`/item/${page._id}`}
-              key={page._id}
-              element={
-                <ItemDetails username={id} item={page} userType={userType} />
-              }
-            />
+            <>
+              <Route
+                path={`/edit/${page._id}`}
+                element={<Edit item={page} userType={userType} />}
+              />
+              <Route
+                path={`/item/${page._id}`}
+                key={page._id}
+                element={
+                  <ItemDetails username={id} item={page} userType={userType} />
+                }
+              />
+            </>
           );
         })}
         <Route path="/" element={<Root />} />
@@ -56,6 +65,16 @@ function App() {
           }
         />
         <Route path="/store" element={<Store isLogged={isLogged} />} />
+        <Route
+          path="/panel/add-new"
+          element={
+            <AddNew
+              isChanged={isChanged}
+              setIsChanged={setIsChanged}
+              userType={userType}
+            />
+          }
+        />
         <Route path="/panel" element={<Panel isLogged={isLogged} />} />
         <Route
           path="/bookmarks"

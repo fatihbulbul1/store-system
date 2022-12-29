@@ -5,6 +5,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-regular-svg-icons";
 import { faBookmark as solid } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router-dom";
 type Props = {
   username: string;
@@ -101,6 +102,11 @@ const ItemDetails = (props: Props) => {
               <FontAwesomeIcon
                 onClick={() => handleBookmark(props.item._id)}
                 icon={isBookmarked ? solid : reg}
+              />
+            ) : props.userType === "admin" ? (
+              <FontAwesomeIcon
+                onClick={() => navigate(`/edit/${props.item._id}`)}
+                icon={faPenToSquare}
               />
             ) : (
               ""

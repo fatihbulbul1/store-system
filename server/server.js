@@ -110,6 +110,7 @@ app.post("/add", (req, res) => {
     img: req.body.img,
     productName: req.body.productName,
     price: req.body.price,
+    description: req.body.description,
   });
   newProduct
     .save()
@@ -117,6 +118,19 @@ app.post("/add", (req, res) => {
 });
 app.get("/items", (req, res) => {
   Product.find().then((item) => res.json(item));
+});
+app.post("/edit-item", (req, res) => {
+  Product.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      $set: {
+        productName: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        img: req.body.img,
+      },
+    }
+  ).then((user) => res.json(true));
 });
 mongoose.connect(process.env.MONGO_URI).then(() => {
   console.log("Connected to db");

@@ -16,6 +16,9 @@ const ProductSchema = mongoose.Schema({
     default:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et quam eu odio mattis efficitur. Orci varius natoque penatibus et magnis dis parturient montes, nascetur. ",
   },
-  review: Number,
+  review: {
+    type: Number,
+    default: 4.2,
+  },
 });
 module.exports = mongoose.model("Product", ProductSchema);

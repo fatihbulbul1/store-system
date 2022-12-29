@@ -1,11 +1,27 @@
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 type Props = {
   isLogged: boolean | undefined;
 };
 
 const Panel = (props: Props) => {
-  return <div>{props.isLogged ? <p>Panel</p> : <Navigate to="/login" />}</div>;
+  const navigate = useNavigate();
+  return (
+    <div>
+      {props.isLogged ? (
+        <div className="admin-panel">
+          <button
+            style={{ padding: "10px" }}
+            onClick={() => navigate("/panel/add-new")}
+          >
+            Add new item
+          </button>
+        </div>
+      ) : (
+        <Navigate to="/login" />
+      )}
+    </div>
+  );
 };
 
 export default Panel;
